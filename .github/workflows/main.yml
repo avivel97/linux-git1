@@ -1,10 +1,8 @@
 name: action_on_push
 on:
   push:
-  branches:
-      - main
-        paths:
-       - '*.py'
+   paths:
+          - '*.py'
   status: {}
   page_build:
   release:
