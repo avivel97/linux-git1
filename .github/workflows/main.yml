@@ -1,11 +1,16 @@
-name: action_on_push
+name: new_issue
 on:
   push:
-   paths:
-          - '*.py'
+    paths:
+    - '*.py'
   status: {}
-  page_build: "Thanks for a pуthon script edit"
-  release:
-    types: # This configuration does not affect the page_build event above
-      - created
-  
+jobs:
+  automerge:
+    runs-on: ubuntu-latest
+    steps:
+      - name: push
+        run: |
+          curl -X POST --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' https://api.github.com/repos/avivel97/linux-git1/issues -d '{"title":"test issue from datamove", "body": "yep, just a test!"}'
+          ${{ github.event.push.url }}/merge \
+          -d '{"commit_title":"redactered python-file pr ${{github.event.push.number }} for ${{ github.event.push.user.login }}" }'
+
